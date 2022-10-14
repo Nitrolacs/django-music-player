@@ -18,8 +18,8 @@ class LinkedListItem:
 
     @next_item.setter
     def next_item(self, value):
-        self._next = value
-        value._previous = self
+        self._next = LinkedListItem(value)
+        value._previous = LinkedListItem(self.track)
 
     @property
     def previous_item(self):
@@ -28,8 +28,8 @@ class LinkedListItem:
 
     @previous_item.setter
     def previous_item(self, value):
-        self._previous = value
-        value._next = self
+        self._previous = LinkedListItem(value)
+        value._next = LinkedListItem(self.track)
 
     def __repr__(self):
         return repr(self.track)
@@ -38,43 +38,39 @@ class LinkedListItem:
 class LinkedList:
     """Связный список"""
 
-    head = None
-    tail = None
-
     def __init__(self, first_item=None):
-        self.head = first_item
-        self.tail = first_item
+        self.first_item = first_item
 
     @property
     def last(self):
         """Последний элемент"""
-        return self.tail
+        raise NotImplementedError()
 
     def append_left(self, item):
         """Добавление слева"""
-        if self.head is None:
-            self.head = LinkedListItem(item)
-            self.tail = LinkedListItem(item)
+
+        if self.first_item is None:
+            new_item = LinkedListItem(item)
+            self.first_item = new_item
         else:
             new_item = LinkedListItem(item)
-            self.head._previous = new_item
-            new_item._next = self.head
-            self.head = new_item
+            self.first_item._previous = new_item
+            new_item._next = self.first_item
+            self.first_item = new_item
 
     def append_right(self, item):
         """Добавление справа"""
-        if self.head is None:
-            self.head = LinkedListItem(item)
-            return item
-        elif self.tail is None:
-            self.tail = LinkedListItem(item)
-            self.head.next_item = self.tail
-            return item
+
+        if self.first_item is None:
+            new_item = LinkedListItem(item)
+            self.first_item = new_item
         else:
-            self.tail = LinkedListItem(item)
-            new_item = self.tail.previous_item
-            new_item.next_item = self.tail
-            return item
+            new_item = LinkedListItem(item)
+            current_item = self.first_item
+            while current_item._next:
+                current_item = current_item._next
+            current_item._next = new_item
+            new_item._previous = current_item
 
     def append(self, item):
         """Добавление справа"""
@@ -93,11 +89,11 @@ class LinkedList:
         length = 0
         while tmp_item:
             length += 1
-            tmp_item = tmp_item.next
+            tmp_item = tmp_item._next
         return length
 
     def __iter__(self):
-        new_item = self.head
+        new_item = self.first_item
 
         while new_item:  # Если есть элемент
             yield new_item.track  # "Выкидываемое" значение
@@ -123,64 +119,17 @@ class LinkedList:
             previous = tmp_head
         self.first_item = previous
 
-
 """
-    # УДАЛИТЬ
-    def print_list(self):
-        cur = self.first_item
-        while cur:
-            print(cur.track)
-            cur = cur._next
+node = LinkedListItem(0)
+previous = node
+first = node
+node = LinkedListItem(1)
+previous.next_item = node  # в этом моменте и у previous, и у first
+                           # устанавливается значение _next равное 1, так как previous is first
+                           # у node устанавливается значение _previous равное 0
+previous = node  # у previous тоже будет значение _previous равняться 0, как и у node
+previous.next_item = first # образуется бесконечная рекурсия
+linked_list = LinkedList(first)
 
-
-
-dllist = LinkedList()
-dllist.append_left(0)
-dllist.append(1)
-dllist.append(2)
-dllist.append(3)
-dllist.append(4)
-dllist.append_left(5)
-
-dllist.print_list()
-print()
-print(f"len = {dllist.length}")
-
-dllist.__reversed__()
-dllist.print_list()
-
-
-
-node = LinkedListItem(5)
-linked_list = LinkedList(node)
-linked_list.append(7)
-linked_list.append(8)
-linked_list.print_list()
-print(linked_list.length)
-
-
-dllist = LinkedList()
-dllist.append(4)
-dllist.append(-3)
-dllist.append(1)
-dllist.append(25)
-dllist.append(0)
-dllist.append(10)
-
-for number in dllist:
-    print(number)
-
-expected_len = 1
+print(len(linked_list))  # должно получиться 2
 """
-
-dllist = LinkedList()
-dllist.append(4)
-dllist.append(-3)
-dllist.append(1)
-dllist.append(25)
-dllist.append(0)
-dllist.append(10)
-
-for number in dllist:
-    print(number)
-
