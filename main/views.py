@@ -1,5 +1,9 @@
 from django.shortcuts import render
+from .models import Composition
 
 
 def homepage(request):
-    return render(request, 'index.html')
+    composition = Composition.objects.all()
+    return render(request, 'base.html', {
+        'composition':composition
+    })

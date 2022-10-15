@@ -1,0 +1,27 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django Music Player</title>
+    <link rel="stylesheet" href=" {% static 'main/css/style.css' %} ">
+</head>
+<body>
+<header>
+    <div class="header_logo">
+        Django Music Player
+    </div>
+</header>
+
+<div class="player">
+    <div class="imgbox">
+        <img src="{% static 'main/media/$_10.JPG' %}" alt="music cover">
+    </div>
+    <audio src="{% static 'main/media/TRON_Legacy_-_The_Grid_(Long_Version).mp3' %}" type="audio/mp3" controls></audio>
+</div>
+</body>
+</html>

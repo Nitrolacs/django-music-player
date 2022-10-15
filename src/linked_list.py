@@ -18,8 +18,10 @@ class LinkedListItem:
 
     @next_item.setter
     def next_item(self, value):
-        self._next = LinkedListItem(value)
-        value._previous = LinkedListItem(self.track)
+        self._next = value
+        value._previous = self
+        if value._next == self:
+            value._next = None
 
     @property
     def previous_item(self):
@@ -28,8 +30,10 @@ class LinkedListItem:
 
     @previous_item.setter
     def previous_item(self, value):
-        self._previous = LinkedListItem(value)
-        value._next = LinkedListItem(self.track)
+        self._previous = value
+        value._next = self
+        if value._previous == self:
+            value._previous = None
 
     def __repr__(self):
         return repr(self.track)
@@ -39,6 +43,9 @@ class LinkedList:
     """Связный список"""
 
     def __init__(self, first_item=None):
+        while first_item:
+            first_item = first_item.previous_item
+
         self.first_item = first_item
 
     @property
@@ -89,7 +96,7 @@ class LinkedList:
         length = 0
         while tmp_item:
             length += 1
-            tmp_item = tmp_item._next
+            tmp_item = tmp_item.next_item
         return length
 
     def __iter__(self):
@@ -97,7 +104,7 @@ class LinkedList:
 
         while new_item:  # Если есть элемент
             yield new_item.track  # "Выкидываемое" значение
-            new_item = new_item._next  # Переход к следующему элементу
+            new_item = new_item.next_item  # Переход к следующему элементу
 
     def __next__(self):
         raise NotImplementedError()
@@ -119,6 +126,9 @@ class LinkedList:
             previous = tmp_head
         self.first_item = previous
 
+    def __repr__(self):
+        return [number for number in self]
+
 """
 node = LinkedListItem(0)
 previous = node
@@ -127,9 +137,9 @@ node = LinkedListItem(1)
 previous.next_item = node  # в этом моменте и у previous, и у first
                            # устанавливается значение _next равное 1, так как previous is first
                            # у node устанавливается значение _previous равное 0
-previous = node  # у previous тоже будет значение _previous равняться 0, как и у node
-previous.next_item = first # образуется бесконечная рекурсия
-linked_list = LinkedList(first)
 
+previous = node  # у previous тоже будет значение _previous равняться 0, как и у node
+previous.next_item = first
+linked_list = LinkedList(first)
 print(len(linked_list))  # должно получиться 2
 """

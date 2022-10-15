@@ -1,0 +1,64 @@
+* {
+    padding: 0;
+    margin: 0;
+    background: #0C0F14;
+    box-sizing: border-box;
+}
+
+body {
+
+    background: url("../content/maxresdefault.jpg") no-repeat center;
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+header {
+    border-color: #B4CDCA;
+    border-style: solid;
+    color: #B4CDCA;
+    font-family: "Arial", system-ui;
+    font-size: 15px;
+    font-weight: bold
+}
+
+.header_logo {
+    margin: 19px 0 19px 24px;
+}
+
+.player {
+    margin: 50px auto;
+    width: 350px;
+    background: #393E3D;
+    border-radius: 20px;
+    border-color: #B4CDCA;
+    border-style: solid;
+}
+
+.player .imgbox {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.player .imgbox img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.player audio {
+    margin: 5px 5px 5px 5px;
+    width: 95%;
+    outline: none;
+    background-color: #B4CDCA;
+    border-color: #393E3D;
+}

@@ -1,6 +1,7 @@
 from django.db import models
 from src.linked_list import LinkedList
 
+
 class Composition(models.Model):
     title = models.CharField(max_length=500)
     artist = models.CharField(max_length=500)
@@ -14,6 +15,7 @@ class Composition(models.Model):
             # логика для получения длины музыкального трека
             pass
         return super().save(*args, **kwargs)
+
 
 class PlayList(models.Model, LinkedList):
     pass
