@@ -6,8 +6,7 @@
 }
 
 body {
-
-    background: url("../content/maxresdefault.jpg") no-repeat center;
+    background: url("../media/maxresdefault.jpg") no-repeat center;
     background-size: cover;
     justify-content: center;
     align-items: center;
@@ -17,10 +16,12 @@ body {
 header {
     border-color: #B4CDCA;
     border-style: solid;
+    border-radius: 20px;
     color: #B4CDCA;
     font-family: "Arial", system-ui;
     font-size: 15px;
-    font-weight: bold
+    font-weight: bold;
+
 }
 
 .header_logo {
@@ -30,35 +31,93 @@ header {
 .player {
     margin: 50px auto;
     width: 350px;
-    background: #393E3D;
+    background: #0C0F14;
     border-radius: 20px;
     border-color: #B4CDCA;
     border-style: solid;
+    height: 584px;
 }
 
 .player .imgbox {
     position: relative;
-    width: 100%;
-    height: 350px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    width: 347px;
+    height: 347px;
+    border-radius: 17px;
+    border-color: #B4CDCA;
+    border-style: solid;
+    margin-top: -2px;
+    margin-left: -1px;
 }
 
 .player .imgbox img {
-    position: absolute;
-    top: 0;
+    #position: absolute;
+    top: -10px;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-radius: 17px;
 }
 
-.player audio {
-    margin: 5px 5px 5px 5px;
-    width: 95%;
+.player .songname {
+    color: #B4CDCA;
+    font-family: "Arial", system-ui;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 12px;
+    margin-left: 13px;
+}
+
+.player .songauthor {
+    color: #97B0AD;
+    font-family: "Arial", system-ui;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 7px;
+    margin-left: 13px;
+}
+
+.player .middle {
+    width: 100%;
+}
+
+.slider-container .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 3px;
+    border-radius: 1px;
     outline: none;
-    background-color: #B4CDCA;
-    border-color: #393E3D;
+    background-color: #6C8582;
+}
+
+.slider-container .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: #E0F9F6;
+    border-radius: 50%;
+    border-color: #E0F9F6;
+    cursor: pointer;
+    outline: none;
+}
+
+.slider-container .slider::-webkit-slider-thumb:hover {
+    height: 20px;
+    width: 20px;
+}
+
+.slider-container .slider::-moz-range-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: #E0F9F6;
+    border-radius: 50%;
+    border-color: #E0F9F6;
+    cursor: pointer;
+    outline: none;
+}
+
+.slider-container .slider::-moz-range-thumb:hover {
+    height: 20px;
+    width: 20px;
 }
