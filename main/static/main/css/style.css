@@ -3,6 +3,7 @@
     margin: 0;
     background: #0C0F14;
     box-sizing: border-box;
+    font-family: "Arial", system-ui;
 }
 
 body {
@@ -18,7 +19,6 @@ header {
     border-style: solid;
     border-radius: 20px;
     color: #B4CDCA;
-    font-family: "Arial", system-ui;
     font-size: 15px;
     font-weight: bold;
 
@@ -148,4 +148,38 @@ header {
 .slider-container .slider:active::-moz-range-thumb {
     height: 20px;
     width: 20px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.prev-track,
+.play-track,
+.next-track {
+    cursor: pointer;
+}
+
+.prev-track {
+    padding-left: 88px;
+
+}
+
+.play-track {
+    padding-left: 23px;
+}
+
+.next-track {
+    padding-left: 23px;
+}
+
+.timer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #97B0AD;
+    margin: 8px 33px 16px 33px;
 }

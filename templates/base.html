@@ -27,8 +27,14 @@
         <div class="slider-container">
             <span class="bar"><span class="fill"></span></span>
             <input id="slider" class="slider" type="range" min="0" max="100" value="0">
+
         </div>
     </div>
+    <div class="timer">
+        <span class="current-time">0:30</span>
+        <span class="total_duration">1:05</span>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
     <script>
         var $slider = $("#slider");
@@ -41,7 +47,16 @@
         $slider.on("input", setBar);
         setBar();
     </script>
+
+    <div class="buttons">
+        <div class="prev-track"><img src="{% static 'main/media/previous.svg' %}" alt="prev"></div>
+        <div class="play-track"><img src="{% static 'main/media/play.svg' %}" alt="play"></div>
+        <div class="next-track"><img src="{% static 'main/media/next-track.svg' %}" alt="next "></div>
+    </div>
+
+
 </div>
+
 
 </body>
 </html>
