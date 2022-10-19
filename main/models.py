@@ -5,7 +5,7 @@ from src.linked_list import LinkedList
 class Composition(models.Model):
     title = models.CharField(max_length=500)
     artist = models.CharField(max_length=500)
-    playlist = models.ForeignKey('PlayList', on_delete=models.SET_NULL, null=True)
+    playlist = models.ForeignKey('PlayList', on_delete=models.SET_NULL, null=True, blank=True)
     time_length = models.DecimalField(blank=True, max_digits=20, decimal_places=2)
     audio_file = models.FileField(upload_to='musics/')
     cover_image = models.ImageField(upload_to='music_image/')
