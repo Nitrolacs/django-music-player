@@ -58,7 +58,7 @@ header {
     border-radius: 17px;
 }
 
-.player .songname {
+.songname {
     color: #B4CDCA;
     font-family: "Arial", system-ui;
     font-size: 15px;
@@ -67,7 +67,7 @@ header {
     margin-left: 13px;
 }
 
-.player .songauthor {
+.songauthor {
     color: #97B0AD;
     font-family: "Arial", system-ui;
     font-size: 12px;
@@ -190,7 +190,6 @@ header {
     border-radius: 20px;
     border-color: #B4CDCA;
     border-style: solid;
-    #height: 100%;
 }
 
 .playlist-information {
@@ -198,7 +197,7 @@ header {
     margin-left: 21px;
     margin-right: 21px;
     border-radius: 20px;
-    display:flex;
+    display: flex;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
@@ -216,7 +215,6 @@ header {
 }
 
 .playlist-information .small-img-box img {
-    #position: absolute;
     top: -10px;
     left: 0;
     width: 100%;
@@ -234,4 +232,28 @@ header {
     border-style: solid;
     margin-top: -2px;
     margin-left: -1px;
+}
+
+.songs {
+    list-style-type: none;
+    width: 303px;
+    margin-bottom: 25px;
+    border-radius: 17px;
+    border-color: #B4CDCA;
+    border-style: solid;
+    margin-left: 20px;
+    margin-top: 25px;
+}
+
+.song {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 9px;
+}
+
+.song-name {
+    color: #B4CDCA;
+    font-size: 12px;
+    font-weight: bold;
 }
