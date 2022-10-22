@@ -1,5 +1,5 @@
 """
-Модуль, реализующий операции над связным списком
+Модуль, реализующий двусвязный списком
 """
 
 
@@ -18,10 +18,13 @@ class LinkedListItem:
 
     @next_item.setter
     def next_item(self, value):
-        self._next = value
-        value._previous = self
-        if value._next == self:
-            value._next = None
+
+        if value:
+            if self._next != value:
+                self._next = value
+                value.previous_item = self
+        else:
+            self._next = None
 
     @property
     def previous_item(self):
@@ -30,73 +33,125 @@ class LinkedListItem:
 
     @previous_item.setter
     def previous_item(self, value):
-        self._previous = value
-        value._next = self
-        if value._previous == self:
-            value._previous = None
+        if value:
+            if self._previous != value:
+                self._previous = value
+                value.next_item = self
+        else:
+            self._previous = None
 
-    def __repr__(self):
-        return repr(self.track)
+    def track(self):
+        return self.track
+
 
 
 class LinkedList:
-    """Связный список"""
+    """Двусвязный список"""
 
     def __init__(self, first_item=None):
-        while first_item:
-            first_item = first_item.previous_item
-
-        self.first_item = first_item
+        self.first_item = None
+        self.items_count = 0
+        if first_item:
+            self.append(first_item)
 
     @property
     def last(self):
         """Последний элемент"""
-        raise NotImplementedError()
+        last_element = None
+        if self.first_item:
+            last_element = self.first_item.previous_item
+        return last_element
 
     def append_left(self, item):
-        """Добавление слева"""
+        """Добавление элемента в начало списка"""
+        if not isinstance(item, LinkedListItem):
+            item = LinkedListItem(item)
 
-        if self.first_item is None:
-            new_item = LinkedListItem(item)
-            self.first_item = new_item
+        if not self.first_item:
+            self.first_item = item
+            self.first_item.next_item = self.first_item
+            self.first_item.previous_item = self.first_item
+
         else:
-            new_item = LinkedListItem(item)
-            self.first_item._previous = new_item
-            new_item._next = self.first_item
-            self.first_item = new_item
+            self.first_item.previous_item.next_item = item
+            item.next_item = self.first_item
+            self.first_item = self.first_item.previous_item
 
     def append_right(self, item):
-        """Добавление справа"""
+        """Добавление элемента в конец списка"""
+        if not isinstance(item, LinkedListItem):
+            item = LinkedListItem(item)
 
-        if self.first_item is None:
-            new_item = LinkedListItem(item)
-            self.first_item = new_item
+        if not self.first_item:
+            self.first_item = item
+
+            if self.first_item.next_item:
+                current = self.first_item
+
+                while current.next_item != self.first_item:
+                    current = current.next_item
+
+                self.first_item.previous_item = current
+                current.next_item = self.first_item
+            else:
+                self.first_item.previous_item = self.first_item
         else:
-            new_item = LinkedListItem(item)
-            current_item = self.first_item
-            while current_item._next:
-                current_item = current_item._next
-            current_item._next = new_item
-            new_item._previous = current_item
+            self.first_item.previous_item.next_item = item
+            item.next_item = self.first_item
 
     def append(self, item):
         """Добавление справа"""
-        return self.append_right(item)
+        self.append_right(item)
 
     def remove(self, item):
-        """Удаление"""
-        raise NotImplementedError()
+        """Удаление элемента"""
+        if not isinstance(item, LinkedListItem):
+            item = LinkedListItem(item)
+
+        if self.first_item:
+
+            if item.track == self.first_item.track:
+
+                if self.first_item.next_item == self.first_item:
+                    self.first_item = None
+                else:
+                    remove_item = self.first_item
+                    self.first_item = self.first_item.next_item
+                    remove_item.next_item.previous_item = remove_item.previous_item
+                    remove_item.next_item = None
+                    remove_item.previous_item = None
+            else:
+                cur_item = self.first_item.next_item
+                exception = True
+                while cur_item != self.first_item:
+                    if cur_item.track == item.track:
+                        exception = False
+                        break
+                    cur_item = cur_item.next_item
+
+                if not exception:
+                    remove_item = cur_item
+                    remove_item.next_item.previous_item = remove_item.previous_item
+                    remove_item.next_item = None
+                    remove_item.previous_item = None
+                else:
+                    raise ValueError()
+        else:
+            raise ValueError()
 
     def insert(self, previous, item):
         """Вставка справа"""
         raise NotImplementedError()
 
     def __len__(self):
-        tmp_item = self.first_item
+        """Длина списка"""
         length = 0
-        while tmp_item:
+        if self.first_item:
             length += 1
-            tmp_item = tmp_item.next_item
+            cur = self.first_item
+            while cur.next_item != self.first_item:
+                length += 1
+                cur = cur.next_item
         return length
 
     def __iter__(self):
@@ -116,7 +171,7 @@ class LinkedList:
         raise NotImplementedError()
 
     def __reversed__(self):
-        head = self.head
+        head = self.first_item
         previous = None
         while head:
             tmp_head = head
@@ -128,6 +183,7 @@ class LinkedList:
 
     def __repr__(self):
         return [number for number in self]
+
 
 """
 node = LinkedListItem(0)
