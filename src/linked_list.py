@@ -43,6 +43,8 @@ class LinkedListItem:
     def track(self):
         return self.track
 
+    def __repr__(self):
+        return self.track
 
 
 class LinkedList:
@@ -96,7 +98,7 @@ class LinkedList:
             else:
                 self.first_item.previous_item = self.first_item
         else:
-            self.first_item.previous_item.next_item = item
+            self.last.next_item = item
             item.next_item = self.first_item
 
     def append(self, item):
@@ -141,7 +143,20 @@ class LinkedList:
 
     def insert(self, previous, item):
         """Вставка справа"""
-        raise NotImplementedError()
+        if self.first_item:
+            if not isinstance(item, LinkedListItem):
+                item = LinkedListItem(item)
+            if self.first_item == previous:
+                self.first_item.next_item.previous_item = item
+                self.first_item.next_item = item
+            else:
+                cur_item = self.first_item
+                while cur_item.previous_item != previous:
+                    cur_item = cur_item.previous_item
+                cur_item.previous_item.next_item = item
+                cur_item.previous_item = item
+        else:
+            raise ValueError()
 
     def __len__(self):
         """Длина списка"""
@@ -155,47 +170,91 @@ class LinkedList:
         return length
 
     def __iter__(self):
+        """Поддержка итерации"""
         new_item = self.first_item
 
         while new_item:  # Если есть элемент
-            yield new_item.track  # "Выкидываемое" значение
-            new_item = new_item.next_item  # Переход к следующему элементу
+            if new_item.next_item != self.first_item:
+                yield new_item.track  # "Выкидываемое" значение
+                new_item = new_item.next_item  # Переход к следующему элементу
+            else:
+                yield new_item.track
+                break
 
     def __next__(self):
-        raise NotImplementedError()
+        """Возврат следующего элемента"""
+        if self.items_count == len(self):
+            raise StopIteration()
+
+        return_item = self[self.items_count]
+        self.items_count += 1
 
     def __getitem__(self, index):
-        raise NotImplementedError()
+        """Возврат элемента по индексу"""
+        if not self.first_item:
+            raise IndexError()
+
+        if index >= len(self):
+            raise IndexError()
+
+        if index < 0:
+            index = index + len(self)
+            if index < 0:
+                raise IndexError()
+
+        if not 0 <= index < len(self):
+            raise IndexError()
+
+        number = 0
+        current = self.first_item
+
+        while number != index:
+            number += 1
+            current = current.next_item
+
+        return current
 
     def __contains__(self, item):
-        raise NotImplementedError()
+        """Добавляет поддержку оператора in"""
+
+        new_item = self.first_item
+        while new_item:
+            if new_item.next_item != self.first_item:
+                if new_item.track == item:
+                    return True
+                else:
+                    new_item = new_item.next_item  # Переход к следующему элементу
+            else:
+                if new_item.track == item:
+                    return True
+                return False
 
     def __reversed__(self):
         head = self.first_item
         previous = None
         while head:
             tmp_head = head
-            head = head._next
+            head = head.next_item
             tmp_head._next = previous
             tmp_head._previous = head
             previous = tmp_head
         self.first_item = previous
 
-    def __repr__(self):
-        return [number for number in self]
-
-
 """
-node = LinkedListItem(0)
-previous = node
-first = node
-node = LinkedListItem(1)
-previous.next_item = node  # в этом моменте и у previous, и у first
-                           # устанавливается значение _next равное 1, так как previous is first
-                           # у node устанавливается значение _previous равное 0
+dl_list = LinkedList()
+dl_list.append(2)
+dl_list.append(1)
+dl_list.append(3)
+dl_list.append(5)
 
-previous = node  # у previous тоже будет значение _previous равняться 0, как и у node
-previous.next_item = first
-linked_list = LinkedList(first)
-print(len(linked_list))  # должно получиться 2
+# dl_list.__reversed__()
+# print(dl_list.__contains__(10))
+item = dl_list.__getitem__(1)
+print(item)
+print(f"type(item) == {type(item.track)}")
+
+node_list = [2, 1, 3, 5]
+item_new = node_list[1]
+print(f"type(item_new) == {type(item_new)}")
+print(item == item_new)
 """
