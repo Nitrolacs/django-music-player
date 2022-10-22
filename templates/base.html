@@ -19,7 +19,7 @@
 
 <div class="player">
     <div class="imgbox">
-        <img src="{% static 'main/media/$_10.JPG' %}" alt="music cover">
+        <img src="{% static 'main/media/$_10.JPG' %}" alt="music cover" class="music_cover">
     </div>
     <p class="songname">The Grid (из фильма «ТРОН: Наследие»)</p>
     <p class="songauthor">Daft Punk</p>
@@ -111,7 +111,7 @@
     const song_title = document.querySelector('.songname')
     const artist = document.querySelector('.songauthor')
     const playlist = document.querySelector('.playlist-information')
-    const music_img = document.querySelector('.imgbox')
+    const music_img = document.querySelector('.music_cover')
 
     // init music indexing
     let compositionIndex = 0
