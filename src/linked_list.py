@@ -7,7 +7,7 @@ class LinkedListItem:
     """Узел связного списка"""
 
     def __init__(self, data=None):
-        self.track = data
+        self.data = data
         self._previous = None
         self._next = None
 
@@ -39,15 +39,6 @@ class LinkedListItem:
                 value.next_item = self
         else:
             self._previous = None
-
-    def track(self):
-        return self.track
-
-    def __str__(self):
-        return self.track
-
-    def __repr__(self):
-        return self.track
 
 
 class LinkedList:
@@ -115,7 +106,7 @@ class LinkedList:
 
         if self.first_item:
 
-            if item.track == self.first_item.track:
+            if item.data == self.first_item.data:
 
                 if self.first_item.next_item == self.first_item:
                     self.first_item = None
@@ -129,7 +120,7 @@ class LinkedList:
                 cur_item = self.first_item.next_item
                 exception = True
                 while cur_item != self.first_item:
-                    if cur_item.track == item.track:
+                    if cur_item.data == item.data:
                         exception = False
                         break
                     cur_item = cur_item.next_item
@@ -223,12 +214,12 @@ class LinkedList:
         new_item = self.first_item
         while new_item:
             if new_item.next_item != self.first_item:
-                if new_item.track == item:
+                if new_item.data == item:
                     return True
                 else:
                     new_item = new_item.next_item  # Переход к следующему элементу
             else:
-                if new_item.track == item:
+                if new_item.data == item:
                     return True
                 return False
 
@@ -251,6 +242,7 @@ class LinkedList:
                 break
         self.first_item = previous
 
+
 """
 dl_list = LinkedList()
 dl_list.append(2)
@@ -260,12 +252,12 @@ dl_list.append(5)
 
 # item = dl_list.__getitem__(1)
 # print(item)
-# print(f"type(item) == {type(item.track)}")
+# print(f"type(item) == {type(item.data)}")
 
 # node_list = [2, 1, 3, 5]
 # item_new = node_list[1]
 # print(f"type(item_new) == {type(item_new)}")
 # print(item == item_new)
 
-print([item.track for item in dl_list])
+print([item.data for item in dl_list])
 """

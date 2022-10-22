@@ -185,7 +185,7 @@ class TestLinkedList(unittest.TestCase):
                 linked_list.append_right(42)
                 appended_item = linked_list.last
                 if expected_len == 0:
-                    self.assertTrue(appended_item.track == 42)
+                    self.assertTrue(appended_item.data == 42)
                     self.assertTrue(appended_item.next_item is appended_item)
                 else:
                     self.assertTrue(first.previous_item is appended_item)
@@ -211,7 +211,7 @@ class TestLinkedList(unittest.TestCase):
                 linked_list.append(42)
                 appended_item = linked_list.last
                 if expected_len == 0:
-                    self.assertTrue(appended_item.track == 42)
+                    self.assertTrue(appended_item.data == 42)
                     self.assertTrue(appended_item.next_item is appended_item)
                 else:
                     self.assertTrue(first.previous_item is appended_item)
@@ -243,7 +243,7 @@ class TestLinkedList(unittest.TestCase):
                 linked_list.insert(linked_list[index], data)
                 self.assertEqual(len(linked_list), len(node_list) + 1)
                 node_list.insert(index + 1, data)
-                self.assertEqual([i.track for i in linked_list], node_list)
+                self.assertEqual([i.data for i in linked_list], node_list)
 
     def test_getitem(self):
         """Тест индексации"""
