@@ -89,8 +89,77 @@
 
 
     </ul>
+
+
 </div>
 
+<audio class="audio-player" preload="metadata" src='/main/static/main/media/TRON_Legacy_-_The_Grid_(Long_Version).mp3'></audio>
+
+{{ composition_list | json_script:"musics" }}
+
+<script>
+
+    const player = document.querySelector('.audio-player')
+    const play = document.querySelector('.play-track')
+    const prev = document.querySelector('.prev-track')
+    const next = document.querySelector('.next-track')
+    const duration = document.querySelector('.total_duration')
+    const currentTime = document.querySelector('.current-time')
+    const progress = document.querySelector('.slider')
+    const progress_container = document.querySelector('.slider-container')
+    const audio_tracks = document.querySelector('.songs')
+    const song_title = document.querySelector('.songname')
+    const artist = document.querySelector('.songauthor')
+    const playlist = document.querySelector('.playlist-information')
+    const music_img = document.querySelector('.imgbox')
+
+    // init music indexing
+    let compositionIndex = 0
+
+    // get music from DOM
+    const musics = JSON.parse(document.getElementById('musics').textContent)
+
+    // functions
+    const setSRC = () => {
+        player.src = `{{ MEDIA_URL }}/${musics[compositionIndex].audio_file}`
+        song_title.textContent = musics[compositionIndex].title
+        artist.textContent = musics[compositionIndex].artist
+        music_img.setAttribute('src', `{{ MEDIA_URL }}/${musics[compositionIndex].cover_image}`)
+        if (musics[compositionIndex].playlist != null) {
+            playlist.textContent = musics[compositionIndex].playlist
+        } else {
+            playlist.textContent = "Single"
+        }
+    }
+
+    const playOrPause = () => {
+        if (player.paused) {
+            player.play()
+        } else {
+            player.pause()
+        }
+    }
+
+    const formatTime = (secs) => {
+        let min = Math.floor((secs % 3600) / 60)
+        let sec = Math.floor(secs % 60)
+        if (sec < 10) {
+            sec = `0${sec}`
+        }
+        return `${min}:${sec}`
+    }
+
+    // load music on refresh
+    setSRC()
+    player.pause()
+
+    // when play is clicked
+    play.addEventListener('click', () => {
+        playOrPause()
+    })
+
+</script>
 
 </body>
+
 </html>

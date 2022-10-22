@@ -40,6 +40,9 @@ class LinkedListItem:
         else:
             self._previous = None
 
+    def __repr__(self):
+        return str(self.data)
+
 
 class LinkedList:
     """Двусвязный список"""
@@ -164,27 +167,22 @@ class LinkedList:
         return length
 
     def __iter__(self):
-        """Поддержка итерации"""
-        new_item = self.first_item
-
-        while new_item:  # Если есть элемент
-            if new_item.next_item != self.first_item:
-                yield new_item  # "Выкидываемое" значение
-                new_item = new_item.next_item  # Переход к следующему элементу
-            else:
-                yield new_item
-                break
+        """Получение итератора"""
+        self.items_count = 0
+        return self
 
     def __next__(self):
-        """Возврат следующего элемента"""
+        """Получение следующего элемента"""
         if self.items_count == len(self):
             raise StopIteration()
 
         return_item = self[self.items_count]
         self.items_count += 1
 
+        return return_item
+
     def __getitem__(self, index):
-        """Возврат элемента по индексу"""
+        """Получение элемента по индексу"""
         if not self.first_item:
             raise IndexError()
 
@@ -209,7 +207,7 @@ class LinkedList:
         return current
 
     def __contains__(self, item):
-        """Добавляет поддержку оператора in"""
+        """Поддержка оператора in"""
 
         new_item = self.first_item
         while new_item:
