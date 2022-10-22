@@ -224,40 +224,15 @@ class LinkedList:
                 return False
 
     def __reversed__(self):
-        head = self.first_item
-        previous = None
-        while head:
-            if head.next_item != self.first_item:
-                tmp_head = head
-                head = head.next_item
-                tmp_head._next = previous
-                tmp_head._previous = head
-                previous = tmp_head
-            else:
-                tmp_head = head
-                head = head.next_item
-                tmp_head._next = previous
-                tmp_head._previous = head
-                previous = tmp_head
-                break
-        self.first_item = previous
-
-
-"""
-dl_list = LinkedList()
-dl_list.append(2)
-dl_list.append(1)
-dl_list.append(3)
-dl_list.append(5)
-
-# item = dl_list.__getitem__(1)
-# print(item)
-# print(f"type(item) == {type(item.data)}")
-
-# node_list = [2, 1, 3, 5]
-# item_new = node_list[1]
-# print(f"type(item_new) == {type(item_new)}")
-# print(item == item_new)
-
-print([item.data for item in dl_list])
-"""
+        """Поддержка функции reversed"""
+        result = self
+        if self.first_item:
+            new_head = LinkedList()
+            current = self.first_item.previous_item
+            new_head.append(current.data)
+            current = current.previous_item
+            while current != self.first_item.previous_item:
+                new_head.append(current.data)
+                current = current.previous_item
+            result = new_head
+        return result

@@ -251,7 +251,7 @@ class TestLinkedList(unittest.TestCase):
             linked_list = create_linked_list(node_list)
             with self.subTest(node_list=node_list, index=index):
                 item = linked_list[index]
-                self.assertEqual(item, node_list[index])
+                self.assertEqual(item.data, node_list[index])
 
     def test_getitem_failed(self):
         """Тест индексации с исключением IndexError"""
