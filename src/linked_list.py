@@ -43,6 +43,9 @@ class LinkedListItem:
     def track(self):
         return self.track
 
+    def __str__(self):
+        return self.track
+
     def __repr__(self):
         return self.track
 
@@ -175,10 +178,10 @@ class LinkedList:
 
         while new_item:  # Если есть элемент
             if new_item.next_item != self.first_item:
-                yield new_item.track  # "Выкидываемое" значение
+                yield new_item  # "Выкидываемое" значение
                 new_item = new_item.next_item  # Переход к следующему элементу
             else:
-                yield new_item.track
+                yield new_item
                 break
 
     def __next__(self):
@@ -233,11 +236,19 @@ class LinkedList:
         head = self.first_item
         previous = None
         while head:
-            tmp_head = head
-            head = head.next_item
-            tmp_head._next = previous
-            tmp_head._previous = head
-            previous = tmp_head
+            if head.next_item != self.first_item:
+                tmp_head = head
+                head = head.next_item
+                tmp_head._next = previous
+                tmp_head._previous = head
+                previous = tmp_head
+            else:
+                tmp_head = head
+                head = head.next_item
+                tmp_head._next = previous
+                tmp_head._previous = head
+                previous = tmp_head
+                break
         self.first_item = previous
 
 """
@@ -247,14 +258,14 @@ dl_list.append(1)
 dl_list.append(3)
 dl_list.append(5)
 
-# dl_list.__reversed__()
-# print(dl_list.__contains__(10))
-item = dl_list.__getitem__(1)
-print(item)
-print(f"type(item) == {type(item.track)}")
+# item = dl_list.__getitem__(1)
+# print(item)
+# print(f"type(item) == {type(item.track)}")
 
-node_list = [2, 1, 3, 5]
-item_new = node_list[1]
-print(f"type(item_new) == {type(item_new)}")
-print(item == item_new)
+# node_list = [2, 1, 3, 5]
+# item_new = node_list[1]
+# print(f"type(item_new) == {type(item_new)}")
+# print(item == item_new)
+
+print([item.track for item in dl_list])
 """
