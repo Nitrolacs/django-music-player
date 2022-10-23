@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="timer">
-        <span class="current-time">0:30</span>
+        <span class="current-time">0:00</span>
         <span class="total_duration">1:05</span>
     </div>
 
@@ -93,7 +93,8 @@
 
 </div>
 
-<audio class="audio-player" preload="metadata" src='/main/static/main/media/TRON_Legacy_-_The_Grid_(Long_Version).mp3'></audio>
+<audio class="audio-player" preload="metadata"
+       src='/main/static/main/media/TRON_Legacy_-_The_Grid_(Long_Version).mp3'></audio>
 
 {{ composition_list | json_script:"musics" }}
 
@@ -106,7 +107,10 @@
     const duration = document.querySelector('.total_duration')
     const currentTime = document.querySelector('.current-time')
     const progress = document.querySelector('.slider')
-    const progress_container = document.querySelector('.slider-container')
+    const progress_container = document.querySelector('.bar')
+
+    const progress_line = document.querySelector('.fill')
+
     const audio_tracks = document.querySelector('.songs')
     const song_title = document.querySelector('.songname')
     const artist = document.querySelector('.songauthor')
@@ -158,6 +162,20 @@
         playOrPause()
     })
 
+    // load duration of music for UI
+    player.addEventListener('loadedmetadata', () => {
+        duration.textContent = formatTime(player.duration)
+    })
+
+    // update progress bar
+    player.addEventListener('timeupdate', () => {
+        let sec = player.currentTime
+        let total = player.duration
+        let audio_played = Math.round((sec / total) * 100)
+
+        progress_line.style.width = `${audio_played}%`
+        progress.value = audio_played
+    })
 </script>
 
 </body>
