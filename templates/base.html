@@ -172,10 +172,31 @@
         let sec = player.currentTime
         let total = player.duration
         let audio_played = Math.round((sec / total) * 100)
-
+        currentTime.textContent = formatTime(player.currentTime)
         progress_line.style.width = `${audio_played}%`
         progress.value = audio_played
     })
+
+    // when prev btn is clicked
+    prev.addEventListener('click', () => {
+        compositionIndex = compositionIndex - 1
+        if (compositionIndex < 0) {
+            compositionIndex = musics.length - 1
+        }
+        setSRC()
+        playOrPause()
+    })
+
+    // when next btn is clicked
+    next.addEventListener('click', () => {
+        compositionIndex = compositionIndex + 1
+        if (compositionIndex > musics.length - 1) {
+            compositionIndex = 0
+        }
+        setSRC()
+        playOrPause()
+    })
+
 </script>
 
 </body>
