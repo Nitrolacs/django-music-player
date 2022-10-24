@@ -73,7 +73,8 @@
         {% for comp in composition %}
 
             <li class="song">
-                <div style="cursor: pointer; margin-left: 9px;"><img src="{% static 'main/media/icon1.svg' %}"
+                <div style="cursor: pointer; margin-left: 9px;"><img class="play_img"
+                                                                     src="{% static 'main/media/icon1.svg' %}"
                                                                      alt="play">
                 </div>
                 <p class="song-name" style="margin-left: 14px; width: 185px">{{ comp.title }} - {{ comp.artist }}</p>
@@ -198,9 +199,9 @@
     })
 
     // update progress bar on click
-    progress.addEventListener('click', e=>{
-        const clicked_percentage = (e.offsetX/progress_container.offsetWidth)*100
-        const audio_played = (clicked_percentage/100) * player.duration
+    progress.addEventListener('click', e => {
+        const clicked_percentage = (e.offsetX / progress_container.offsetWidth) * 100
+        const audio_played = (clicked_percentage / 100) * player.duration
         let playing
         if (player.paused) {
             playing = false
@@ -211,6 +212,27 @@
         player.currentTime = audio_played
         if (playing === false) {
             player.play()
+        }
+    })
+    audio_tracks.addEventListener('click', e => {
+        if (e.target.className === 'play_img') {
+            let parent_cont
+
+            if (e.target.nodeName === 'div') {
+                parent_cont = e.target.parentNode
+            } else {
+                parent_cont = e.target.parentNode.parentNode
+            }
+
+            const newIndex = Array.from(audio_tracks.querySelectorAll('li')).indexOf(parent_cont)
+
+            if (newIndex === compositionIndex) {
+                playOrPause()
+            } else {
+                compositionIndex = newIndex
+                setSRC()
+                player.play()
+            }
         }
     })
 
