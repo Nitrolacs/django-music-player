@@ -50,7 +50,7 @@
 
     <div class="buttons">
         <div class="prev-track"><img src="{% static 'main/media/previous.svg' %}" alt="prev"></div>
-        <div class="play-track"><img src="{% static 'main/media/play.svg' %}" alt="play"></div>
+        <div class="play-track"><img src="{% static 'main/media/play.svg' %}" alt="play" class="play_btn"></div>
         <div class="next-track"><img src="{% static 'main/media/next-track.svg' %}" alt="next "></div>
     </div>
 
@@ -109,7 +109,7 @@
     const currentTime = document.querySelector('.current-time')
     const progress = document.querySelector('.slider')
     const progress_container = document.querySelector('.bar')
-
+    const play_button = document.querySelector('.play_btn')
     const progress_line = document.querySelector('.fill')
 
     const audio_tracks = document.querySelector('.songs')
@@ -139,8 +139,10 @@
 
     const playOrPause = () => {
         if (player.paused) {
+            play_button.src = "{% static 'main/media/pause.svg' %}"
             player.play()
         } else {
+            play_button.src = "{% static 'main/media/play.svg' %}"
             player.pause()
         }
     }
