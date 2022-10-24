@@ -197,6 +197,23 @@
         playOrPause()
     })
 
+    // update progress bar on click
+    progress.addEventListener('click', e=>{
+        const clicked_percentage = (e.offsetX/progress_container.offsetWidth)*100
+        const audio_played = (clicked_percentage/100) * player.duration
+        let playing
+        if (player.paused) {
+            playing = false
+        } else {
+            playing = true
+        }
+
+        player.currentTime = audio_played
+        if (playing === false) {
+            player.play()
+        }
+    })
+
 </script>
 
 </body>
