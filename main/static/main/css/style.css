@@ -258,3 +258,9 @@ header {
     font-size: 12px;
     font-weight: bold;
 }
+
+.add_song {
+    margin-left: 140px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
