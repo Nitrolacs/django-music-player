@@ -18,7 +18,14 @@
 </header>
 
 <form class="add-form" method="post">
+    <label for="id_title" class="label_playlist" style="margin-top: 25px">
+        Title
+    </label>
     <input type="text" name="title" id="id_title" maxlength="500" required="" placeholder="Enter song title" class="text_input"><br>
+
+    <label for="id_artist" class="label_playlist">
+        Artist
+    </label>
     <input type="text" name="artist" id="id_artist" maxlength="500" required="" placeholder="Enter song artist" class="text_input"><br>
 
     <label for="id_playlist" class="label_playlist">
@@ -33,6 +40,16 @@
         Time length
     </label>
     <input type="number" name="time_length" step="0.01" id="id_time_length" class="text_input" required="">
+
+    <label for="id_audio_file" class="label_playlist">
+        Audio file
+    </label>
+    <input type="file" name="audio_file" required="" id="id_audio_file" class="select">
+
+    <label for="id_cover_image" class="label_playlist">
+        Cover image
+    </label>
+    <input type="file" name="cover_image" accept="image/*" required="" id="id_cover_image" class="select">
 
     <button type="submit" class="btn_submit">Submit</button>
 </form>

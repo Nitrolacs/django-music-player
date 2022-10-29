@@ -276,7 +276,7 @@ header {
     border-color: #B4CDCA;
     border-style: solid;
     max-width: 900px;
-    height: 584px;
+    height: 724px;
 
 }
 
@@ -297,7 +297,8 @@ header {
 }
 
 .btn_submit {
-    margin-top: 30px;
+    margin-top: 15px;
+    margin-bottom: 50px;
     font-family: "Arial", system-ui;
     font-weight: bold;
     background-color: #B4CDCA;
@@ -314,5 +315,13 @@ header {
     align-items: start;
     color: #B4CDCA;
     font-family: "Arial", system-ui;
+    font-weight: bold;
+}
+
+.select {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 15px;
+    color: #B4CDCA;
     font-weight: bold;
 }
