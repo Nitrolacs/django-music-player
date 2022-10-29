@@ -216,6 +216,7 @@
 
         player.currentTime = audio_played
         if (playing === false) {
+            play_button.src = "{% static 'main/media/pause.svg' %}"
             player.play()
         }
     })

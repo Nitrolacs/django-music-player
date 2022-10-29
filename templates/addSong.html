@@ -17,7 +17,10 @@
     </div>
 </header>
 
-<form class="add-form" method="post">
+
+<form class="add-form" method="post" enctype= multipart/form-data>
+    {% csrf_token %}
+
     <label for="id_title" class="label_playlist" style="margin-top: 25px">
         Title
     </label>
@@ -28,31 +31,41 @@
     </label>
     <input type="text" name="artist" id="id_artist" maxlength="500" required="" placeholder="Enter song artist" class="text_input"><br>
 
+
     <label for="id_playlist" class="label_playlist">
         Playlist
     </label>
-    <select id="id_playlist" name="playlist" required="" class="text_input">
-        <option value="" selected="">---------</option>
-        <option value="2">Playlist</option>
-    </select>
+    <input type="text" name="playlist" id="id_playlist" maxlength="500" required="" placeholder="Enter playlist title" class="text_input"><br>
 
     <label for="id_time_length" class="label_playlist">
         Time length
     </label>
-    <input type="number" name="time_length" step="0.01" id="id_time_length" class="text_input" required="">
+    <input type="number" name="time_length" step="0.01" id="id_time_length" class="text_input">
 
     <label for="id_audio_file" class="label_playlist">
         Audio file
     </label>
-    <input type="file" name="audio_file" required="" id="id_audio_file" class="select">
+    <input type='file' accept="audio/mp3" name="audio_file" class="select" onchange="showname('audio')" id="id_audio_file" required />
 
     <label for="id_cover_image" class="label_playlist">
         Cover image
     </label>
-    <input type="file" name="cover_image" accept="image/*" required="" id="id_cover_image" class="select">
+    <input type='file' accept="image/*" name="cover_image" class="select" onchange="showname('image')" id="id_cover_image" required />
 
     <button type="submit" class="btn_submit">Submit</button>
 </form>
+
+<script>
+    function showname (type) {
+    if(type=='audio'){
+        var name = document.getElementById('id_audio_file');
+    }else{
+        var name = document.getElementById('id_cover_image');
+    }
+    const file_name= name.files.item(0).name
+    document.querySelector(`.details-${type}`).textContent=`${file_name}`
+    }
+</script>
 
 </body>
 
