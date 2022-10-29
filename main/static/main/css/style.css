@@ -262,5 +262,57 @@ header {
 .add_song {
     margin-left: 140px;
     margin-bottom: 10px;
+    margin-top: 10px;
     cursor: pointer;
+}
+
+.add-form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 80px auto 148px auto;
+    background: #0C0F14;
+    border-radius: 20px;
+    border-color: #B4CDCA;
+    border-style: solid;
+    max-width: 900px;
+    height: 584px;
+
+}
+
+.text_input {
+    width: 800px;
+    color: #B4CDCA;
+    font-family: "Arial", system-ui;
+    font-weight: bold;
+    padding: 10px 4px 10px 4px;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: #B4CDCA;
+    margin: 20px auto 20px auto;
+}
+
+.text_input:focus {
+    border-color: #fff;
+}
+
+.btn_submit {
+    margin-top: 30px;
+    font-family: "Arial", system-ui;
+    font-weight: bold;
+    background-color: #B4CDCA;
+    color: #0C0F14;
+    border-color: #B4CDCA;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 15px;
+}
+
+.label_playlist {
+    font-size: 15px;
+    align-items: start;
+    color: #B4CDCA;
+    font-family: "Arial", system-ui;
+    font-weight: bold;
 }

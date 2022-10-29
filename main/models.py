@@ -7,7 +7,7 @@ from main.validators import validate_is_audio
 class Composition(models.Model):
     title = models.CharField(max_length=500)
     artist = models.CharField(max_length=500)
-    playlist = models.ForeignKey('PlayList', on_delete=models.SET_NULL, null=True, blank=True)
+    playlist = models.ForeignKey('PlayList', on_delete=models.SET_NULL, null=True, blank=False)
     time_length = models.DecimalField(blank=True, max_digits=20, decimal_places=2)
     audio_file = models.FileField(validators=[validate_is_audio])
     cover_image = models.ImageField()
@@ -21,4 +21,5 @@ class Composition(models.Model):
 
 
 class PlayList(models.Model, LinkedList):
-    pass
+    name = models.CharField(max_length=500)
+

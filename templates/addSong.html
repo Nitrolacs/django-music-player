@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django Music Player Add Song</title>
+    <link rel="stylesheet" href=" {% static 'main/css/style.css' %} ">
+    <link rel="icon" type="image/png" href= "{% static 'main/media/favicon.ico' %}">
+</head>
+<body>
+<header>
+    <div class="header_logo">
+        Adding Music
+    </div>
+</header>
+
+<form class="add-form" method="post">
+    <input type="text" name="title" id="id_title" maxlength="500" required="" placeholder="Enter song title" class="text_input"><br>
+    <input type="text" name="artist" id="id_artist" maxlength="500" required="" placeholder="Enter song artist" class="text_input"><br>
+
+    <label for="id_playlist" class="label_playlist">
+        Playlist
+    </label>
+    <select id="id_playlist" name="playlist" required="" class="text_input">
+        <option value="" selected="">---------</option>
+        <option value="2">Playlist</option>
+    </select>
+
+    <label for="id_time_length" class="label_playlist">
+        Time length
+    </label>
+    <input type="number" name="time_length" step="0.01" id="id_time_length" class="text_input" required="">
+
+    <button type="submit" class="btn_submit">Submit</button>
+</form>
+
+</body>
+
+</html>
