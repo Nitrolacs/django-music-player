@@ -235,6 +235,15 @@ header {
     margin-left: -1px;
 }
 
+.playlist-name {
+    color: #B4CDCA;
+    font-family: "Arial", system-ui;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-left: 13px;
+}
+
 .songs {
     list-style-type: none;
     width: 303px;

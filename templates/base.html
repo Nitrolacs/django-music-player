@@ -20,10 +20,10 @@
 
 <div class="player">
     <div class="imgbox">
-        <img src="{% static 'main/media/$_10.JPG' %}" alt="music cover" class="music_cover">
+        <img src="{% static 'main/media/music_placeholder.png' %}" alt="music cover" class="music_cover">
     </div>
-    <p class="songname">The Grid (из фильма «ТРОН: Наследие»)</p>
-    <p class="songauthor">Daft Punk</p>
+    <p class="songname">Title</p>
+    <p class="songauthor">Artist</p>
     <div class="middle">
         <div class="slider-container">
             <span class="bar"><span class="fill"></span></span>
@@ -33,7 +33,7 @@
     </div>
     <div class="timer">
         <span class="current-time">0:00</span>
-        <span class="total_duration">1:05</span>
+        <span class="total_duration">0:00</span>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
@@ -61,11 +61,10 @@
 <div class="music-list">
     <div class="playlist-information">
         <div class="small-img-box">
-            <img src="{% static 'main/media/$_10.JPG' %}" alt="small-img-box">
+            <img src="{% static 'main/media/music_placeholder.png' %}" alt="small-img-box">
         </div>
         <div class="small-playlist-info">
-            <p class="songname" style="margin-top: 23px">Tron: Legacy - The Complete Edition</p>
-            <p class="songauthor">Daft Punk</p>
+            <p class="playlist-name">Title</p>
         </div>
     </div>
 
@@ -90,7 +89,7 @@
         {% endfor %}
 
 
-        <div class="add_song"><img src="{% static 'main/media/plus.svg' %}" alt="prev"></div>
+        <a href="/add_song"><div class="add_song" ><img src="{% static 'main/media/plus.svg' %}" alt="prev"></div></a>
 
     </ul>
 
@@ -98,7 +97,7 @@
 </div>
 
 <audio class="audio-player" preload="metadata"
-       src='/main/static/main/media/TRON_Legacy_-_The_Grid_(Long_Version).mp3'></audio>
+       src=''></audio>
 
 {{ composition_list | json_script:"musics" }}
 
@@ -118,8 +117,10 @@
     const audio_tracks = document.querySelector('.songs')
     const song_title = document.querySelector('.songname')
     const artist = document.querySelector('.songauthor')
-    const playlist = document.querySelector('.playlist-information')
+    const playlist = document.querySelector('.playlist-name')
     const music_img = document.querySelector('.music_cover')
+
+    const add_song = document.querySelector('.add_song')
 
     // init music indexing
     let compositionIndex = 0
