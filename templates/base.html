@@ -79,8 +79,8 @@
                 </div>
                 <p class="song-name" style="margin-left: 14px; width: 185px">{{ comp.title }} - {{ comp.artist }}</p>
                 <p class="song-name" style="margin-right: 3px">{{ comp.time_length | time_formatter }}</p>
-                <div class="delete-song" style="cursor: pointer; margin-left: 8px; margin-top: -8px"><img
-                        src="{% static 'main/media/minus.svg' %}" alt="minus">
+                <div class="delete-song" style="cursor: pointer; margin-left: 8px; margin-top: -8px"><a href="{% url 'music_player:delete-song' comp.id %}"><img
+                        src="{% static 'main/media/minus.svg' %}" alt="minus"></a>
                 </div>
             </li>
 

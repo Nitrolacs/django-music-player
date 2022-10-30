@@ -4,6 +4,7 @@ from .models import Composition, PlayList
 
 from django.contrib import messages
 
+
 def homepage(request):
     composition = Composition.objects.all()
     composition_list = list(Composition.objects.all().values())
@@ -11,6 +12,13 @@ def homepage(request):
         'composition': composition,
         'composition_list': composition_list
     })
+
+
+# Delete an Event
+def delete_song(request, comp_id):
+    song = Composition.objects.get(pk=comp_id)
+    song.delete()
+    return redirect("music_player:home_page")
 
 
 def addSong(request):
