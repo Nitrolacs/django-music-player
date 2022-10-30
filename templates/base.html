@@ -79,7 +79,7 @@
                 </div>
                 <p class="song-name" style="margin-left: 14px; width: 185px">{{ comp.title }} - {{ comp.artist }}</p>
                 <p class="song-name" style="margin-right: 3px">{{ comp.time_length | time_formatter }}</p>
-                <div style="cursor: pointer; margin-left: 8px; margin-top: -8px"><img
+                <div class="delete-song" style="cursor: pointer; margin-left: 8px; margin-top: -8px"><img
                         src="{% static 'main/media/minus.svg' %}" alt="minus">
                 </div>
             </li>
@@ -97,7 +97,7 @@
 <audio class="audio-player" preload="metadata"
        src=''></audio>
 
-{{ composition_list | json_script:"compositions" }}
+{{ composition_list | json_script:"musics" }}
 
 <script>
 
@@ -124,15 +124,15 @@
     let compositionIndex = 0
 
     // get music from DOM
-    const compositions = JSON.parse(document.getElementById('compositions').textContent)
+    const musics = JSON.parse(document.getElementById('musics').textContent)
 
     // functions
     const setSRC = () => {
-        player.src = `{{ MEDIA_URL }}/${compositions[compositionIndex].audio_file}`
-        song_title.textContent = compositions[compositionIndex].title
-        artist.textContent = compositions[compositionIndex].artist
-        music_img.setAttribute('src', `{{ MEDIA_URL }}/${compositions[compositionIndex].cover_image}`)
-        playlist_name.textContent = compositions[compositionIndex].playlist
+        player.src = `{{ MEDIA_URL }}/${musics[compositionIndex].audio_file}`
+        song_title.textContent = musics[compositionIndex].title
+        artist.textContent = musics[compositionIndex].artist
+        music_img.setAttribute('src', `{{ MEDIA_URL }}/${musics[compositionIndex].cover_image}`)
+        playlist_name.textContent = musics[compositionIndex].playlist
     }
 
     const playOrPause = () => {
