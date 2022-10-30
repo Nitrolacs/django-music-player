@@ -64,7 +64,7 @@
             <img src="{% static 'main/media/music_placeholder.png' %}" alt="small-img-box">
         </div>
         <div class="small-playlist-info">
-            <p class="playlist-name">Title</p>
+            <p class="playlistname">Title</p>
         </div>
     </div>
 
@@ -115,7 +115,7 @@
     const audio_tracks = document.querySelector('.songs')
     const song_title = document.querySelector('.songname')
     const artist = document.querySelector('.songauthor')
-    const playlist_name = document.querySelector('.playlist-name')
+    const playlist_name = document.querySelector('.playlistname')
     const music_img = document.querySelector('.music_cover')
 
     const add_song = document.querySelector('.add_song')
@@ -132,7 +132,7 @@
         song_title.textContent = musics[compositionIndex].title
         artist.textContent = musics[compositionIndex].artist
         music_img.setAttribute('src', `{{ MEDIA_URL }}/${musics[compositionIndex].cover_image}`)
-        playlist_name.textContent = musics[compositionIndex].playlist
+        playlist_name.textContent = musics[compositionIndex].playlist__name
     }
 
     const playOrPause = () => {

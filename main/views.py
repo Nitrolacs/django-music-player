@@ -7,7 +7,8 @@ from django.contrib import messages
 
 def homepage(request):
     composition = Composition.objects.all()
-    composition_list = list(Composition.objects.all().values())
+    composition_list = list(
+        Composition.objects.all().values('title', 'artist', 'playlist__name', 'time_length', 'audio_file', 'cover_image'))
     return render(request, 'base.html', {
         'composition': composition,
         'composition_list': composition_list
