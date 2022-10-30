@@ -1,5 +1,4 @@
 from django.db import models
-from src.linked_list import LinkedList
 from main.helpers import get_audio_length
 from main.validators import validate_is_audio
 
@@ -7,7 +6,7 @@ from main.validators import validate_is_audio
 class Composition(models.Model):
     title = models.CharField(max_length=500)
     artist = models.CharField(max_length=500)
-    playlist = models.ForeignKey('PlayList', on_delete=models.SET_NULL, null=True, blank=False)
+    playlist = models.ForeignKey('PlayList', on_delete=models.CASCADE, blank=False)
     time_length = models.DecimalField(blank=True, max_digits=20, decimal_places=2)
     audio_file = models.FileField(validators=[validate_is_audio])
     cover_image = models.ImageField()
@@ -20,6 +19,8 @@ class Composition(models.Model):
         return super().save(*args, **kwargs)
 
 
-class PlayList(models.Model, LinkedList):
+class PlayList(models.Model):
     name = models.CharField(max_length=500)
 
+    def __str__(self):
+        return f"{self.name}"

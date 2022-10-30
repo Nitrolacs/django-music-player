@@ -79,8 +79,6 @@
                 </div>
                 <p class="song-name" style="margin-left: 14px; width: 185px">{{ comp.title }} - {{ comp.artist }}</p>
                 <p class="song-name" style="margin-right: 3px">{{ comp.time_length | time_formatter }}</p>
-                <div style="cursor: pointer; margin-left: 7px"><img src="{% static 'main/media/download.svg' %}"
-                                                                    alt="download"></div>
                 <div style="cursor: pointer; margin-left: 8px; margin-top: -8px"><img
                         src="{% static 'main/media/minus.svg' %}" alt="minus">
                 </div>
@@ -99,7 +97,7 @@
 <audio class="audio-player" preload="metadata"
        src=''></audio>
 
-{{ composition_list | json_script:"musics" }}
+{{ composition_list | json_script:"compositions" }}
 
 <script>
 
@@ -117,7 +115,7 @@
     const audio_tracks = document.querySelector('.songs')
     const song_title = document.querySelector('.songname')
     const artist = document.querySelector('.songauthor')
-    const playlist = document.querySelector('.playlist-name')
+    const playlist_name = document.querySelector('.playlist-name')
     const music_img = document.querySelector('.music_cover')
 
     const add_song = document.querySelector('.add_song')
@@ -126,19 +124,15 @@
     let compositionIndex = 0
 
     // get music from DOM
-    const musics = JSON.parse(document.getElementById('musics').textContent)
+    const compositions = JSON.parse(document.getElementById('compositions').textContent)
 
     // functions
     const setSRC = () => {
-        player.src = `{{ MEDIA_URL }}/${musics[compositionIndex].audio_file}`
-        song_title.textContent = musics[compositionIndex].title
-        artist.textContent = musics[compositionIndex].artist
-        music_img.setAttribute('src', `{{ MEDIA_URL }}/${musics[compositionIndex].cover_image}`)
-        if (musics[compositionIndex].playlist != null) {
-            playlist.textContent = musics[compositionIndex].playlist
-        } else {
-            playlist.textContent = "Single"
-        }
+        player.src = `{{ MEDIA_URL }}/${compositions[compositionIndex].audio_file}`
+        song_title.textContent = compositions[compositionIndex].title
+        artist.textContent = compositions[compositionIndex].artist
+        music_img.setAttribute('src', `{{ MEDIA_URL }}/${compositions[compositionIndex].cover_image}`)
+        playlist_name.textContent = compositions[compositionIndex].playlist
     }
 
     const playOrPause = () => {
