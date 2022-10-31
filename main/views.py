@@ -1,4 +1,4 @@
-from main.form import AddCompositionForm
+from main.form import AddCompositionForm, AddPlaylistForm
 from django.shortcuts import render, redirect
 from .models import Composition, PlayList
 
@@ -50,5 +50,18 @@ def addSong(request):
                 return redirect("music_player:home_page")
 
     return render(request, 'addSong.html', {
+        'form': form
+    })
+
+
+def addPlaylist(request):
+    form = AddPlaylistForm()
+    if request.POST:
+        form = AddPlaylistForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("music_player:home_page")
+
+    return render(request, 'addPlaylist.html', {
         'form': form
     })

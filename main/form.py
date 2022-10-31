@@ -1,5 +1,5 @@
 from django import forms
-from .models import Composition
+from .models import Composition, PlayList
 
 
 class AddCompositionForm(forms.ModelForm):
@@ -8,3 +8,9 @@ class AddCompositionForm(forms.ModelForm):
     class Meta:
         model = Composition
         fields = ["title", "artist", "audio_file", "cover_image"]
+
+
+class AddPlaylistForm(forms.ModelForm):
+    class Meta:
+        model = PlayList
+        fields = ["name", "cover_image"]

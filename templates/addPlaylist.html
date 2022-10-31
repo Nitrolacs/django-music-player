@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django Music Player Add Playlist</title>
+    <link rel="stylesheet" href=" {% static 'main/css/style.css' %} ">
+    <link rel="icon" type="image/png" href= "{% static 'main/media/favicon.ico' %}">
+</head>
+<body>
+<header>
+    <div class="header_logo">
+        Adding Playlist
+    </div>
+</header>
+
+
+<form class="add-form" style="height: 350px; margin-bottom: 379px"   method="post" enctype= multipart/form-data>
+    {% csrf_token %}
+
+    <label for="id_name" class="label_playlist" style="margin-top: 25px">
+        Name
+    </label>
+    <input type="text" name="name" id="id_name" maxlength="500" required="" placeholder="Enter playlist name" class="text_input"><br>
+
+    <label for="id_cover_image" class="label_playlist">
+        Cover image
+    </label>
+    <input type='file' accept="image/*" name="cover_image" class="select" onchange="showname('image')" id="id_cover_image" required />
+
+    <button type="submit" class="btn_submit">Submit</button>
+</form>
+
+<script>
+    function showname (type) {
+    if(type=='audio'){
+        var name = document.getElementById('id_audio_file');
+    }else{
+        var name = document.getElementById('id_cover_image');
+    }
+    const file_name= name.files.item(0).name
+    document.querySelector(`.details-${type}`).textContent=`${file_name}`
+    }
+</script>
+
+</body>
+
+</html>
