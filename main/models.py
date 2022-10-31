@@ -21,6 +21,7 @@ class Composition(models.Model):
 
 class PlayList(models.Model):
     name = models.CharField(max_length=500)
+    cover_image = models.ImageField()
 
     def __str__(self):
         return f"{self.name}"

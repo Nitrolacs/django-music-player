@@ -6,12 +6,15 @@ from django.contrib import messages
 
 
 def homepage(request):
+    playlist = PlayList.objects.all()
     composition = Composition.objects.all()
     composition_list = list(
-        Composition.objects.all().values('title', 'artist', 'playlist__name', 'time_length', 'audio_file', 'cover_image'))
+        Composition.objects.all().values('title', 'artist', 'playlist__name', 'playlist__cover_image', 'time_length',
+                                         'audio_file', 'cover_image'))
     return render(request, 'base.html', {
         'composition': composition,
-        'composition_list': composition_list
+        'composition_list': composition_list,
+        'playlist': playlist,
     })
 
 

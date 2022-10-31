@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Django Music Player</title>
     <link rel="stylesheet" href=" {% static 'main/css/style.css' %} ">
-    <link rel="icon" type="image/png" href= "{% static 'main/media/favicon.ico' %}">
+    <link rel="icon" type="image/png" href="{% static 'main/media/favicon.ico' %}">
 </head>
 <body>
 <header>
@@ -61,7 +61,7 @@
 <div class="music-list">
     <div class="playlist-information">
         <div class="small-img-box">
-            <img src="{% static 'main/media/music_placeholder.png' %}" alt="small-img-box">
+            <img src="{% static 'main/media/music_placeholder.png' %}" alt="small-img-box" class="music_cover_plst">
         </div>
         <div class="small-playlist-info">
             <p class="playlistname">Title</p>
@@ -79,7 +79,8 @@
                 </div>
                 <p class="song-name" style="margin-left: 14px; width: 185px">{{ comp.title }} - {{ comp.artist }}</p>
                 <p class="song-name" style="margin-right: 3px">{{ comp.time_length | time_formatter }}</p>
-                <div class="delete-song" style="cursor: pointer; margin-left: 8px; margin-top: -8px"><a href="{% url 'music_player:delete-song' comp.id %}"><img
+                <div class="delete-song" style="cursor: pointer; margin-left: 8px; margin-top: -8px"><a
+                        href="{% url 'music_player:delete-song' comp.id %}"><img
                         src="{% static 'main/media/minus.svg' %}" alt="minus"></a>
                 </div>
             </li>
@@ -87,11 +88,52 @@
         {% endfor %}
 
 
-        <a href="/add_song"><div class="add_song" ><img src="{% static 'main/media/plus.svg' %}" alt="prev"></div></a>
+        <a href="/add_song">
+            <div class="add_song"><img src="{% static 'main/media/plus.svg' %}" alt="prev"></div>
+        </a>
 
     </ul>
 
 
+</div>
+
+<div class="playlist-list">
+    <ul class="plst">
+
+        {% for pllst in playlist %}
+            <li class="pls">
+
+                <div style="cursor: pointer; margin-left: 3px;">
+                    <img class="play_plst"
+                        src="{% static 'main/media/icon1.svg' %}"
+                        alt="play_plst">
+                </div>
+
+                <div class="small-img-box" style="margin-left: 15px;">
+
+
+
+
+                    <img src="{% static 'main/media/music_placeholder.png' %}" alt="small-img-box">
+                </div>
+
+                <div class="small-playlist-info" style="margin-left: 13px;">
+                    <p class="playlistname">{{ pllst.name }}</p>
+                </div>
+
+                <div style="cursor: pointer; margin-left: 14px; margin-top: -11px">
+                    <img class ="minus-plst"  src="{% static 'main/media/minus.svg' %}" alt="minus_plst">
+                </div>
+
+            </li>
+
+        {% endfor %}
+
+        <a href="/add_song">
+            <div class="add_plst"><img src="{% static 'main/media/plus.svg' %}" alt="prev"></div>
+        </a>
+
+    </ul>
 </div>
 
 <audio class="audio-player" preload="metadata"
@@ -120,6 +162,8 @@
 
     const add_song = document.querySelector('.add_song')
 
+    const plst_cover = document.querySelector('.music_cover_plst')
+
     // init music indexing
     let compositionIndex = 0
 
@@ -133,6 +177,7 @@
         artist.textContent = musics[compositionIndex].artist
         music_img.setAttribute('src', `{{ MEDIA_URL }}/${musics[compositionIndex].cover_image}`)
         playlist_name.textContent = musics[compositionIndex].playlist__name
+        plst_cover.setAttribute('src', `{{ MEDIA_URL }}/${musics[compositionIndex].playlist__cover_image}`)
     }
 
     const playOrPause = () => {
