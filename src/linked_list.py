@@ -7,20 +7,24 @@ class LinkedListItem:
     """Узел связного списка"""
 
     def __init__(self, data=None):
+        """Инициализация узла связного списка"""
         self.data = data
         self._previous = None
         self._next = None
 
     @property
     def next_item(self):
-        """Следующий элемент"""
+        """Получение следующего элемент"""
         return self._next
 
     @next_item.setter
     def next_item(self, value):
+        """Установка следующего элемента"""
 
-        if value:
-            if self._next != value:
+        # Проверяем, что значение передано
+        if value is not None:
+            # Если следующий элемент не равен текущему
+            if self.next_item != value:
                 self._next = value
                 value.previous_item = self
         else:
@@ -28,19 +32,24 @@ class LinkedListItem:
 
     @property
     def previous_item(self):
-        """Предыдущий элемент"""
+        """Получение предыдущего элемента"""
         return self._previous
 
     @previous_item.setter
     def previous_item(self, value):
-        if value:
-            if self._previous != value:
+        """Установка предыдущего элемента"""
+
+        # Проверяем, что значение передано
+        if value is not None:
+            # Если предыдущий элемент не равен текущему
+            if self.previous_item != value:
                 self._previous = value
                 value.next_item = self
         else:
             self._previous = None
 
     def __repr__(self):
+        """Читаемое отображение узла связного списка"""
         return str(self.data)
 
 
@@ -48,55 +57,67 @@ class LinkedList:
     """Двусвязный список"""
 
     def __init__(self, first_item=None):
+        """Инициализация колльцевого двусвязного списка"""
         self.first_item = None
+
+        # Для того чтобы переменная была видна во всех методах
         self.items_count = 0
-        if first_item:
+
+        # Проверяем, что объект передан
+        if first_item is not None:
             self.append(first_item)
 
     @property
     def last(self):
         """Последний элемент"""
-        last_element = None
         if self.first_item:
-            last_element = self.first_item.previous_item
-        return last_element
+            return self.first_item.previous_item
+        return None
 
     def append_left(self, item):
         """Добавление элемента в начало списка"""
         if not isinstance(item, LinkedListItem):
             item = LinkedListItem(item)
 
-        if not self.first_item:
+        # Если первого элемента нет
+        if self.first_item is None:
             self.first_item = item
             self.first_item.next_item = self.first_item
             self.first_item.previous_item = self.first_item
 
         else:
+            # Устанавливаем у последнего элемента списка следующий элемент вместо first_item
             self.first_item.previous_item.next_item = item
+
+            # Новый элемент теперь стоит перед первым, first_item становится вторым элементом
             item.next_item = self.first_item
-            self.first_item = self.first_item.previous_item
+
+            # Меняем ссылку на первый элемент
+            self.first_item = item
 
     def append_right(self, item):
         """Добавление элемента в конец списка"""
         if not isinstance(item, LinkedListItem):
             item = LinkedListItem(item)
 
-        if not self.first_item:
+        # Если первого элемента нет
+        if self.first_item is None:
             self.first_item = item
 
-            if self.first_item.next_item:
-                current = self.first_item
+            # Если ссылка на следующий элемент не пустая
+            if self.first_item.next_item is not None:
+                current_item = self.first_item
 
-                while current.next_item != self.first_item:
-                    current = current.next_item
+                while current_item.next_item != self.first_item:
+                    current_item = current_item.next_item
 
-                self.first_item.previous_item = current
-                current.next_item = self.first_item
+                self.first_item.previous_item = current_item
+
             else:
                 self.first_item.previous_item = self.first_item
         else:
             self.last.next_item = item
-            item.next_item = self.first_item
+            self.first_item.previous_item = item
 
     def append(self, item):
         """Добавление справа"""
@@ -104,33 +125,44 @@ class LinkedList:
 
     def remove(self, item):
         """Удаление элемента"""
-        if not isinstance(item, LinkedListItem):
-            item = LinkedListItem(item)
+        item = LinkedListItem(item)
 
-        if self.first_item:
+        # Если первый элемент есть
+        if self.first_item is not None:
 
+            # Если мы хотим удалить первый элемент
             if item.data == self.first_item.data:
 
-                if self.first_item.next_item == self.first_item:
+                # Проверка, что в списке всего 1 элемент
+                if self.last == self.first_item:
+                    # "Обнуляем ссылку на первый элемент"
                     self.first_item = None
+
                 else:
                     remove_item = self.first_item
                     self.first_item = self.first_item.next_item
                     remove_item.next_item.previous_item = remove_item.previous_item
+
+                    # Убираем у удалённого элемента ссылки на следующий и предыдущий элемент.
                     remove_item.next_item = None
                     remove_item.previous_item = None
-            else:
-                cur_item = self.first_item.next_item
-                exception = True
-                while cur_item != self.first_item:
-                    if cur_item.data == item.data:
-                        exception = False
-                        break
-                    cur_item = cur_item.next_item
 
-                if not exception:
-                    remove_item = cur_item
+            else:
+                current_item = self.first_item.next_item
+                desired_element = True
+
+                while current_item != self.first_item:
+
+                    if current_item.data == item.data:
+                        desired_element = False
+                        break
+
+                    current_item = current_item.next_item
+
+                if desired_element is False:
+                    remove_item = current_item
                     remove_item.next_item.previous_item = remove_item.previous_item
+
                     remove_item.next_item = None
                     remove_item.previous_item = None
                 else:
@@ -140,97 +172,121 @@ class LinkedList:
 
     def insert(self, previous, item):
         """Вставка справа"""
-        if self.first_item:
-            if not isinstance(item, LinkedListItem):
-                item = LinkedListItem(item)
-            if self.first_item == previous:
-                self.first_item.next_item.previous_item = item
-                self.first_item.next_item = item
+
+        if not isinstance(item, LinkedListItem):
+            item = LinkedListItem(item)
+
+        # Если первый элемент есть
+        if self.first_item is not None:
+
+            # Сравнение позволяет понять, что у нас один элемент в списке
+            if self.last == self.first_item:
+                # Устанавливаем следующий элемент
+                self.last.previous_item = item
+                item.previous_item = self.first_item
+
             else:
-                cur_item = self.first_item
-                while cur_item.previous_item != previous:
-                    cur_item = cur_item.previous_item
-                cur_item.previous_item.next_item = item
-                cur_item.previous_item = item
+                current_item = self.first_item
+                while current_item.previous_item != previous:
+                    current_item = current_item.previous_item
+                current_item.previous_item.next_item = item
+                item.next_item = current_item
         else:
+            # Чтобы пройти test_insert FAILED
             raise ValueError()
 
     def __len__(self):
         """Длина списка"""
         length = 0
-        if self.first_item:
+
+        # Если первый элемент есть
+        if self.first_item is not None:
             length += 1
-            cur = self.first_item
-            while cur.next_item != self.first_item:
+            current_item = self.first_item
+            while current_item.next_item != self.first_item:
                 length += 1
-                cur = cur.next_item
+                current_item = current_item.next_item
         return length
 
     def __iter__(self):
         """Получение итератора"""
+
+        # Для протокола итератора необходимо наличие двух методов,
+        # __iter__() и __next__()
+
         self.items_count = 0
         return self
 
     def __next__(self):
         """Получение следующего элемента"""
         if self.items_count == len(self):
+            # Точка остановки
             raise StopIteration()
 
-        return_item = self[self.items_count]
+        item = self[self.items_count]
         self.items_count += 1
 
-        return return_item
+        return item
 
     def __getitem__(self, index):
         """Получение элемента по индексу"""
-        if not self.first_item:
+
+        # Если элементом нет
+        if self.first_item is None:
             raise IndexError()
 
-        if index >= len(self):
+        elif index >= len(self):
             raise IndexError()
 
-        if index < 0:
-            index = index + len(self)
+        elif index < 0:
+            index += len(self)
             if index < 0:
                 raise IndexError()
 
-        if not 0 <= index < len(self):
+        elif not isinstance(index, int):
             raise IndexError()
 
-        number = 0
-        current = self.first_item
+        current_item = self.first_item
 
-        while number != index:
-            number += 1
-            current = current.next_item
+        for _ in range(index):
+            current_item = current_item.next_item
 
-        return current
+        return current_item
 
     def __contains__(self, item):
         """Поддержка оператора in"""
 
+        if self.first_item is None:
+            return False
+
         new_item = self.first_item
-        while new_item:
-            if new_item.next_item != self.first_item:
-                if new_item.data == item:
-                    return True
-                else:
-                    new_item = new_item.next_item  # Переход к следующему элементу
+
+        while new_item.next_item != self.first_item:
+            if new_item.data == item:
+                return True
             else:
-                if new_item.data == item:
-                    return True
-                return False
+                new_item = new_item.next_item  # Переход к следующему элементу
+
+        if new_item.data == item:
+            return True
+        return False
 
     def __reversed__(self):
         """Поддержка функции reversed"""
         result = self
-        if self.first_item:
-            new_head = LinkedList()
-            current = self.first_item.previous_item
-            new_head.append(current.data)
-            current = current.previous_item
-            while current != self.first_item.previous_item:
-                new_head.append(current.data)
-                current = current.previous_item
-            result = new_head
+
+        if self.first_item is not None:
+            new_first_item = LinkedList()
+            current_item = self.last
+
+            new_first_item.append(current_item.data)
+            current_item = current_item.previous_item
+
+            while current_item != self.last:
+
+                new_first_item.append(current_item.data)
+                current_item = current_item.previous_item
+
+            result = new_first_item
+
         return result
