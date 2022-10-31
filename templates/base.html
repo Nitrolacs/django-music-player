@@ -101,7 +101,7 @@
     <ul class="plst">
 
         {% for pllst in playlist %}
-            <li class="pls">
+            <li class="pls" style="margin-bottom: 20px">
 
                 <div style="cursor: pointer; margin-left: 3px;">
                     <img class="play_plst"
@@ -111,9 +111,6 @@
 
                 <div class="small-img-box" style="margin-left: 15px;">
 
-
-
-
                     <img src="{% static 'main/media/music_placeholder.png' %}" alt="small-img-box">
                 </div>
 
@@ -122,7 +119,8 @@
                 </div>
 
                 <div style="cursor: pointer; margin-left: 14px; margin-top: -11px">
-                    <img class ="minus-plst"  src="{% static 'main/media/minus.svg' %}" alt="minus_plst">
+                    <a href="{% url 'music_player:delete-pllst' pllst.id %}">
+                        <img class ="minus-plst" src="{% static 'main/media/minus.svg' %}" alt="minus_plst"></a>
                 </div>
 
             </li>

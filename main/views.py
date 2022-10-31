@@ -18,10 +18,17 @@ def homepage(request):
     })
 
 
-# Delete an Event
+# Delete song
 def delete_song(request, comp_id):
     song = Composition.objects.get(pk=comp_id)
     song.delete()
+    return redirect("music_player:home_page")
+
+
+# Delete playlist
+def delete_pllst(request, pllst_id):
+    playlist = PlayList.objects.get(pk=pllst_id)
+    playlist.delete()
     return redirect("music_player:home_page")
 
 
