@@ -136,6 +136,7 @@ audio_tracks.addEventListener('click', e => {
         } else {
             compositionIndex = newIndex
             setSRC()
+            play_button.src = pause_route
             player.play()
         }
     }

@@ -31,11 +31,19 @@
     </label>
     <input type="text" name="artist" id="id_artist" maxlength="500" required="" placeholder="Enter song artist" class="text_input"><br>
 
-
     <label for="id_playlist" class="label_playlist">
         Playlist
     </label>
-    <input type="text" name="playlist" id="id_playlist" maxlength="500" required="" placeholder="Enter playlist title" class="text_input"><br>
+    <select name="playlist" required="" id="id_playlist" class="text_input">
+        <option value="" selected="">---------</option>
+
+        {% for pllst in playlist %}
+
+            <option value="{{ pllst.name }}">{{ pllst.name }}</option>
+
+        {% endfor %}
+
+    </select>
 
     <label for="id_audio_file" class="label_playlist">
         Audio file

@@ -34,23 +34,20 @@ def delete_pllst(request, pllst_id):
 
 def addSong(request):
     form = AddCompositionForm()
+    playlist = PlayList.objects.all()
     if request.POST:
         form = AddCompositionForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save(commit=False)
             playlist = form.cleaned_data.get('playlist')
-            music_playlist = PlayList.objects.filter(name=playlist).exists()
-            if not music_playlist:
-                print('There is no such playlist! First create it.')
-                messages.warning(request, 'There is no such playlist! First create it.')
-            else:
-                music_playlist = PlayList.objects.get_or_create(name=playlist)
-                instance.playlist = music_playlist[0]
-                instance.save()
-                return redirect("music_player:home_page")
+            music_playlist = PlayList.objects.get_or_create(name=playlist)
+            instance.playlist = music_playlist[0]
+            instance.save()
+            return redirect("music_player:home_page")
 
     return render(request, 'addSong.html', {
-        'form': form
+        'form': form,
+        'playlist': playlist,
     })
 
 
