@@ -265,22 +265,16 @@ class LinkedList:
 
     def __reversed__(self):
         """Поддержка функции reversed"""
-        result = self
 
-        if self.first_item is not None:
-            new_first_item = LinkedList()
-            current_item = self.last
+        new_item = self.last
 
-            new_first_item.append(current_item.data)
-            current_item = current_item.previous_item
-
-            while current_item != self.last:
-                new_first_item.append(current_item.data)
-                current_item = current_item.previous_item
-
-            result = new_first_item
-
-        return result
+        while new_item:  # Если есть элемент
+            if new_item.previous_item != self.last:
+                yield new_item  # "Выкидываемое" значение
+                new_item = new_item.previous_item  # Переход к следующему элементу
+            else:
+                yield new_item
+                break
 
     def __repr__(self):
         return str([item for item in self])
