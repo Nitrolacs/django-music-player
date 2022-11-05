@@ -6,19 +6,19 @@
 class LinkedListItem:
     """Узел связного списка"""
 
-    def __init__(self, data=None):
+    def __init__(self, data=None) -> None:
         """Инициализация узла связного списка"""
         self.data = data
         self._previous = None
         self._next = None
 
     @property
-    def next_item(self):
+    def next_item(self) -> "LinkedListItem":
         """Получение следующего элемент"""
         return self._next
 
     @next_item.setter
-    def next_item(self, value):
+    def next_item(self, value: "LinkedListItem") -> None:
         """Установка следующего элемента"""
 
         # Проверяем, что значение передано
@@ -31,12 +31,12 @@ class LinkedListItem:
             self._next = None
 
     @property
-    def previous_item(self):
+    def previous_item(self) -> "LinkedListItem":
         """Получение предыдущего элемента"""
         return self._previous
 
     @previous_item.setter
-    def previous_item(self, value):
+    def previous_item(self, value: "LinkedListItem") -> None:
         """Установка предыдущего элемента"""
 
         # Проверяем, что значение передано
@@ -48,7 +48,7 @@ class LinkedListItem:
         else:
             self._previous = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Читаемое отображение узла связного списка"""
         return str(self.data)
 
@@ -56,7 +56,7 @@ class LinkedListItem:
 class LinkedList:
     """Двусвязный список"""
 
-    def __init__(self, first_item=None):
+    def __init__(self, first_item=None) -> None:
         """Инициализация колльцевого двусвязного списка"""
         self.first_item = None
 
@@ -68,13 +68,13 @@ class LinkedList:
             self.append(first_item)
 
     @property
-    def last(self):
+    def last(self) -> None:
         """Последний элемент"""
         if self.first_item:
             return self.first_item.previous_item
         return None
 
-    def append_left(self, item):
+    def append_left(self, item: object) -> None:
         """Добавление элемента в начало списка"""
         if not isinstance(item, LinkedListItem):
             item = LinkedListItem(item)
@@ -95,7 +95,7 @@ class LinkedList:
             # Меняем ссылку на первый элемент
             self.first_item = item
 
-    def append_right(self, item):
+    def append_right(self, item: object) -> None:
         """Добавление элемента в конец списка"""
         if not isinstance(item, LinkedListItem):
             item = LinkedListItem(item)
@@ -119,59 +119,62 @@ class LinkedList:
             self.last.next_item = item
             self.first_item.previous_item = item
 
-    def append(self, item):
+    def append(self, item: object) -> None:
         """Добавление справа"""
         self.append_right(item)
 
-    def remove(self, item):
+    def remove(self, item: int) -> None:
         """Удаление элемента"""
         item = LinkedListItem(item)
 
-        # Если первый элемент есть
-        if self.first_item is not None:
-
-            # Если мы хотим удалить первый элемент
-            if item.data == self.first_item.data:
-
-                # Проверка, что в списке всего 1 элемент
-                if self.last == self.first_item:
-                    # "Обнуляем ссылку на первый элемент"
-                    self.first_item = None
-
-                else:
-                    remove_item = self.first_item
-                    self.first_item = self.first_item.next_item
-                    remove_item.next_item.previous_item = remove_item.previous_item
-
-                    # Убираем у удалённого элемента ссылки на следующий и предыдущий элемент.
-                    remove_item.next_item = None
-                    remove_item.previous_item = None
-
-            else:
-                current_item = self.first_item.next_item
-                desired_element = True
-
-                while current_item != self.first_item:
-
-                    if current_item.data == item.data:
-                        desired_element = False
-                        break
-
-                    current_item = current_item.next_item
-
-                if desired_element is False:
-                    remove_item = current_item
-                    remove_item.next_item.previous_item = remove_item.previous_item
-
-                    remove_item.next_item = None
-                    remove_item.previous_item = None
-                else:
-                    raise ValueError()
-        else:
+        # Если первого элемента нет
+        if not self.first_item:
             raise ValueError()
 
-    def insert(self, previous, item):
+            # Если мы хотим удалить первый элемент
+        if item.data == self.first_item.data:
+
+            # Проверка, что в списке всего 1 элемент
+            if self.last == self.first_item:
+                # "Обнуляем ссылку на первый элемент"
+                self.first_item = None
+
+            else:
+                remove_item = self.first_item
+                self.first_item = self.first_item.next_item
+                remove_item.next_item.previous_item = remove_item.previous_item
+
+                # Убираем у удалённого элемента ссылки на следующий и предыдущий элемент.
+                remove_item.next_item = None
+                remove_item.previous_item = None
+
+        else:
+            current_item = self.first_item.next_item
+            desired_element = True
+
+            while current_item != self.first_item:
+
+                if current_item.data == item.data:
+                    desired_element = False
+                    break
+
+                current_item = current_item.next_item
+
+            if desired_element is False:
+                remove_item = current_item
+                remove_item.next_item.previous_item = remove_item.previous_item
+
+                remove_item.next_item = None
+                remove_item.previous_item = None
+            else:
+                raise ValueError()
+
+
+    def insert(self, previous: "LinkedListItem", item: int):
         """Вставка справа"""
+
+        if isinstance(previous, int):
+            raise ValueError("previous должен быть элементом связного списка, а не числом.")
 
         if not isinstance(item, LinkedListItem):
             item = LinkedListItem(item)
@@ -278,4 +281,3 @@ class LinkedList:
 
     def __repr__(self):
         return str([item for item in self])
-
