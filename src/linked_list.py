@@ -64,7 +64,7 @@ class LinkedList:
         self.items_count = 0
 
         # Проверяем, что объект передан
-        if first_item is not None:
+        if first_item:
             self.append(first_item)
 
     @property
@@ -80,7 +80,7 @@ class LinkedList:
             item = LinkedListItem(item)
 
         # Если первого элемента нет
-        if self.first_item is None:
+        if not self.first_item:
             self.first_item = item
             self.first_item.next_item = self.first_item
             self.first_item.previous_item = self.first_item
@@ -101,11 +101,11 @@ class LinkedList:
             item = LinkedListItem(item)
 
         # Если первого элемента нет
-        if self.first_item is None:
+        if not self.first_item:
             self.first_item = item
 
             # Если ссылка на следующий элемент не пустая
-            if self.first_item.next_item is not None:
+            if self.first_item.next_item:
                 current_item = self.first_item
 
                 while current_item.next_item != self.first_item:
@@ -169,7 +169,6 @@ class LinkedList:
             else:
                 raise ValueError()
 
-
     def insert(self, previous: "LinkedListItem", item: int):
         """Вставка справа"""
 
@@ -180,7 +179,7 @@ class LinkedList:
             item = LinkedListItem(item)
 
         # Если первый элемент есть
-        if self.first_item is not None:
+        if self.first_item:
 
             # Сравнение позволяет понять, что у нас один элемент в списке
             if self.last == self.first_item:
@@ -203,7 +202,7 @@ class LinkedList:
         length = 0
 
         # Если первый элемент есть
-        if self.first_item is not None:
+        if self.first_item:
             length += 1
             current_item = self.first_item
             while current_item.next_item != self.first_item:
@@ -227,7 +226,7 @@ class LinkedList:
         """Получение элемента по индексу"""
 
         # Если элементом нет
-        if self.first_item is None:
+        if not self.first_item:
             raise IndexError()
 
         elif index >= len(self):
