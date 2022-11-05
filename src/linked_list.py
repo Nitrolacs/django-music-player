@@ -210,23 +210,15 @@ class LinkedList:
 
     def __iter__(self):
         """Получение итератора"""
+        new_item = self.first_item
 
-        # Для протокола итератора необходимо наличие двух методов,
-        # __iter__() и __next__()
-
-        self.items_count = 0
-        return self
-
-    def __next__(self):
-        """Получение следующего элемента"""
-        if self.items_count == len(self):
-            # Точка остановки
-            raise StopIteration()
-
-        item = self[self.items_count]
-        self.items_count += 1
-
-        return item
+        while new_item:  # Если есть элемент
+            if new_item.next_item != self.first_item:
+                yield new_item  # "Выкидываемое" значение
+                new_item = new_item.next_item  # Переход к следующему элементу
+            else:
+                yield new_item
+                break
 
     def __getitem__(self, index):
         """Получение элемента по индексу"""
@@ -283,10 +275,13 @@ class LinkedList:
             current_item = current_item.previous_item
 
             while current_item != self.last:
-
                 new_first_item.append(current_item.data)
                 current_item = current_item.previous_item
 
             result = new_first_item
 
         return result
+
+    def __repr__(self):
+        return str([item for item in self])
+
