@@ -7,7 +7,7 @@ class AddCompositionForm(forms.ModelForm):
 
     class Meta:
         model = Composition
-        fields = ["title", "artist", "audio_file", "cover_image"]
+        fields = ["title", "artist", "audio_file", "cover_image", "order"]
 
 
 class AddPlaylistForm(forms.ModelForm):

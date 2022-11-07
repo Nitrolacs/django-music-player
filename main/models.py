@@ -11,12 +11,17 @@ class Composition(models.Model):
     audio_file = models.FileField(validators=[validate_is_audio])
     cover_image = models.ImageField()
 
+    order = models.PositiveSmallIntegerField(blank=True)
+
     def save(self, *args, **kwargs):
         if not self.time_length:
             # логика для получения длины музыкального трека
             audio_length = get_audio_length(self.audio_file)
             self.time_length = audio_length
         return super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['order']
 
 
 class PlayList(models.Model):

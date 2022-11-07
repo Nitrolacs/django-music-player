@@ -9,4 +9,12 @@ urlpatterns = [
     path('delete_song/<comp_id>', views.delete_song, name='delete-song'),
     path('add_playlist/', views.addPlaylist, name="add_playlist"),
     path('delete_plst/<pllst_id>', views.delete_pllst, name='delete-pllst'),
+
 ]
+
+
+htmx_urlpatterns = [
+    path('sort/', views.sort, name='sort'),
+]
+
+urlpatterns += htmx_urlpatterns

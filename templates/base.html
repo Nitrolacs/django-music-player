@@ -13,7 +13,7 @@
 
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.8.2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </head>
 <body>
 <header>
@@ -73,23 +73,13 @@
     </div>
 
     {% csrf_token %}
-    <form class="sortable songs" hx-trigger="end" hx-post="">
-        <div class="htmx-indicator">Updating...</div>
+    <form class="sortable songs" hx-trigger="end" hx-post="{% url 'music_player:sort' %}">
+        <div class="htmx-indicator" style=>Updating...</div>
         {% for comp in composition %}
             <div>
-                <input type="hidden" name="song_order" value="{{ song.pk }}">
+                <input type="hidden" name="song_order" value="{{ comp.pk }}"  />
                 <li class="song">
-
-                    <div style="cursor: pointer; margin-left: 6px">
-                        <img style="margin-bottom: 2px" class="up_img" src="{% static 'main/media/up.svg' %}" alt="up">
-                    </div>
-                    <div style="cursor: pointer; margin-left: 6px">
-                        <img style="margin-bottom: 2px" class="down_img" src="{% static 'main/media/down.svg' %}"
-                             alt="down">
-                    </div>
-                    <div style="cursor: pointer; margin-left: 9px;"><img class="play_img"
-                                                                         src="{% static 'main/media/icon1.svg' %}"
-                                                                         alt="play">
+                    <div style="cursor: pointer; margin-left: 9px;"><img class="play_img" src="{% static 'main/media/icon1.svg' %}" alt="play">
                     </div>
                     <p class="song-name" style="margin-left: 14px; width: 185px">{{ comp.title }}
                         - {{ comp.artist }}</p>
@@ -103,12 +93,13 @@
         {% endfor %}
 
 
-        <a href="/add_song">
-            <div class="add_song"><img src="{% static 'main/media/plus.svg' %}" alt="add_song"></div>
-        </a>
+
 
     </form>
 
+    <a href="/add_song">
+        <div class="add_song"><img src="{% static 'main/media/plus.svg' %}" alt="add_song"></div>
+    </a>
 
 </div>
 
@@ -162,6 +153,10 @@
 
     // get music from DOM
     const musics = JSON.parse(document.getElementById('musics').textContent)
+
+    document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
 
     htmx.onLoad(function (content) {
         var sortables = content.querySelectorAll(".sortable");

@@ -2,7 +2,7 @@ from main.form import AddCompositionForm, AddPlaylistForm
 from django.shortcuts import render, redirect
 from .models import Composition, PlayList
 
-from django.http import HttpResponse
+from main.utils import get_max_order
 
 
 def homepage(request):
@@ -42,6 +42,7 @@ def addSong(request):
             playlist = form.cleaned_data.get('playlist')
             music_playlist = PlayList.objects.get_or_create(name=playlist)
             instance.playlist = music_playlist[0]
+            instance.order = get_max_order()
             instance.save()
             return redirect("music_player:home_page")
 
@@ -62,3 +63,12 @@ def addPlaylist(request):
     return render(request, 'addPlaylist.html', {
         'form': form
     })
+
+
+def sort(request):
+    comps_pks_order = request.POST.getlist('song_order')
+
+    for idx, comp_pk in enumerate(comps_pks_order, start=1):
+        tmpcomposition = Composition.objects.get(pk=comp_pk)
+        tmpcomposition.order = idx
+        tmpcomposition.save()
