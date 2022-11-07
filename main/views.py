@@ -2,7 +2,7 @@ from main.form import AddCompositionForm, AddPlaylistForm
 from django.shortcuts import render, redirect
 from .models import Composition, PlayList
 
-from django.contrib import messages
+from django.http import HttpResponse
 
 
 def homepage(request):

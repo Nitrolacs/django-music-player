@@ -10,6 +10,10 @@
     <title>Django Music Player</title>
     <link rel="stylesheet" href=" {% static 'main/css/style.css' %} ">
     <link rel="icon" type="image/png" href="{% static 'main/media/favicon.ico' %}">
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.8.2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
 </head>
 <body>
 <header>
@@ -68,23 +72,34 @@
         </div>
     </div>
 
-    <ul class="songs">
-
+    {% csrf_token %}
+    <form class="sortable songs" hx-trigger="end" hx-post="">
+        <div class="htmx-indicator">Updating...</div>
         {% for comp in composition %}
+            <div>
+                <input type="hidden" name="song_order" value="{{ song.pk }}">
+                <li class="song">
 
-            <li class="song">
-                <div style="cursor: pointer; margin-left: 9px;"><img class="play_img"
-                                                                     src="{% static 'main/media/icon1.svg' %}"
-                                                                     alt="play">
-                </div>
-                <p class="song-name" style="margin-left: 14px; width: 185px">{{ comp.title }} - {{ comp.artist }}</p>
-                <p class="song-name" style="margin-right: 3px">{{ comp.time_length | time_formatter }}</p>
-                <div class="delete-song" style="cursor: pointer; margin-left: 8px; margin-top: -8px"><a
-                        href="{% url 'music_player:delete-song' comp.id %}"><img
-                        src="{% static 'main/media/minus.svg' %}" alt="minus"></a>
-                </div>
-            </li>
-
+                    <div style="cursor: pointer; margin-left: 6px">
+                        <img style="margin-bottom: 2px" class="up_img" src="{% static 'main/media/up.svg' %}" alt="up">
+                    </div>
+                    <div style="cursor: pointer; margin-left: 6px">
+                        <img style="margin-bottom: 2px" class="down_img" src="{% static 'main/media/down.svg' %}"
+                             alt="down">
+                    </div>
+                    <div style="cursor: pointer; margin-left: 9px;"><img class="play_img"
+                                                                         src="{% static 'main/media/icon1.svg' %}"
+                                                                         alt="play">
+                    </div>
+                    <p class="song-name" style="margin-left: 14px; width: 185px">{{ comp.title }}
+                        - {{ comp.artist }}</p>
+                    <p class="song-name" style="margin-right: 3px">{{ comp.time_length | time_formatter }}</p>
+                    <div class="delete-song" style="cursor: pointer; margin-left: 8px; margin-top: -8px"><a
+                            href="{% url 'music_player:delete-song' comp.id %}"><img
+                            src="{% static 'main/media/minus.svg' %}" alt="minus"></a>
+                    </div>
+                </li>
+            </div>
         {% endfor %}
 
 
@@ -92,7 +107,7 @@
             <div class="add_song"><img src="{% static 'main/media/plus.svg' %}" alt="add_song"></div>
         </a>
 
-    </ul>
+    </form>
 
 
 </div>
@@ -105,8 +120,8 @@
 
                 <div style="cursor: pointer; margin-left: 3px;">
                     <img class="play_plst"
-                        src="{% static 'main/media/icon1.svg' %}"
-                        alt="play_plst">
+                         src="{% static 'main/media/icon1.svg' %}"
+                         alt="play_plst">
                 </div>
 
                 <div class="small-img-box" style="margin-left: 15px;">
@@ -120,7 +135,7 @@
 
                 <div style="cursor: pointer; margin-left: 14px; margin-top: -11px">
                     <a href="{% url 'music_player:delete-pllst' pllst.id %}">
-                        <img class ="minus-plst" src="{% static 'main/media/minus.svg' %}" alt="minus_plst"></a>
+                        <img class="minus-plst" src="{% static 'main/media/minus.svg' %}" alt="minus_plst"></a>
                 </div>
 
             </li>
@@ -147,6 +162,18 @@
 
     // get music from DOM
     const musics = JSON.parse(document.getElementById('musics').textContent)
+
+    htmx.onLoad(function (content) {
+        var sortables = content.querySelectorAll(".sortable");
+        for (var i = 0; i < sortables.length; i++) {
+            var sortable = sortables[i];
+            new Sortable(sortable, {
+                animation: 150,
+                ghostClass: 'blue-background-class'
+            });
+        }
+    })
+
 </script>
 
 <script type='text/javascript' src="{% static 'main/js/script.js' %}"></script>
