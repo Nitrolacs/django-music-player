@@ -172,8 +172,8 @@ class LinkedList:
     def insert(self, previous: "LinkedListItem", item: int):
         """Вставка справа"""
 
-        if isinstance(previous, int):
-            raise ValueError("previous должен быть элементом связного списка, а не числом.")
+        if not isinstance(previous, LinkedListItem):
+            raise ValueError("previous должен быть элементом связного списка.")
 
         if not isinstance(item, LinkedListItem):
             item = LinkedListItem(item)
